@@ -15,7 +15,7 @@ function sauverOptions() { //enregistrer les options, fonction appelée par le c
         showAllNotifButton: document.getElementById("allNotifs").checked,
         showDesktopNotif: document.getElementById("notifNative").checked
     }
-    
+   
     chrome.storage.sync.set(newOptions, function() {
         window.close();
     });
@@ -27,9 +27,28 @@ document.addEventListener('DOMContentLoaded', function () {
 		var mySpan = document.getElementById('notifSpan');
 		mySpan.style.display = "none";
 	}
+
+	restaurerOptions();
+	
 	var button = document.getElementById("enregistrer");
 	button.addEventListener("click", function() { sauverOptions();});
 	
-	restaurerOptions();
+	var newTab = document.getElementById("newTab");
+	newTab.addEventListener("click", function() { 
+		toggleState(newTab.checked);
+	});
 });
 
+function toggleState(etat) {
+	var liste = document.getElementById("allNotifs");
+	var listeLabel = document.getElementById("allNotifsLabel");
+	
+	if(etat == true) {
+		liste.disabled = true;
+		listeLabel.disabled = true;
+	}
+	else {
+		liste.disabled = false;
+		listeLabel.disabled = false;
+	}
+}
